@@ -1,51 +1,28 @@
-import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'John Soliz — Information Technology Student',
-  description: 'John Soliz is an Information Technology student focused on data networking, cybersecurity, and modern IT infrastructure. Open to internship and technology opportunities.',
-  generator: 'v0.app',
+  title: 'John Soliz — IT, Infrastructure & Creative Technology',
+  description: 'John Soliz’s selected work in network diagnostics, machine learning, and interactive experiences. Explore NetScope, EPL Predictor, Resonant, Cage Atlas, Saturday Gridiron, and JMS Photo Gallery.',
   openGraph: {
-    title: 'John Soliz — Information Technology Student',
-    description: 'Data systems, security, and infrastructure. Open to internship and technology opportunities.',
+    title: 'John Soliz — Curiosity, built into something real.',
+    description: 'IT student at Liberty University. Projects in infrastructure, data, and creative technology. Explore my work, resume, and background.',
     type: 'website',
+    locale: 'en_US',
   },
-  icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+  twitter: {
+    card: 'summary',
+    title: 'John Soliz — IT & Creative Technology',
+    description: 'Network diagnostics, machine learning, and interactive experiences. Selected projects by John Soliz.',
   },
+  icons: { icon: '/icon.svg', apple: '/apple-icon.png' },
 }
 
 export const viewport: Viewport = {
   colorScheme: 'dark',
-  themeColor: '#090a0c',
+  themeColor: '#111311',
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
-  return (
-    <html lang="en">
-      <body className="antialiased">
-        {children}
-        {process.env.NODE_ENV === 'production' && <Analytics />}
-      </body>
-    </html>
-  )
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return <html lang="en"><body>{children}</body></html>
 }

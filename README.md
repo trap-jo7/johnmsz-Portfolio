@@ -1,33 +1,44 @@
-# johnmsz-Portfolio
+# John Soliz — Portfolio
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [v0](https://v0.app).
+A responsive portfolio for John Soliz, an Information Technology student at Liberty University focused on Data Networking & Security.
 
-## Built with v0
+**Website:** https://johnmsz.vercel.app
 
-This repository is linked to a [v0](https://v0.app) project. You can continue developing by visiting the link below -- start new chats to make changes, and v0 will push commits directly to this repo. Every merge to `main` will automatically deploy.
+## Selected projects
 
-[Continue working on v0 →](https://v0.app/chat/projects/prj_xDLjyV13GMRuiWHSHEbvmweNH9Za)
+- [NetScope](https://github.com/trap-jo7/netscope): Go network diagnostics and an isolated DNS/TCP/HTTP incident lab.
+- [Pitchside / EPL Predictor](https://github.com/trap-jo7/epl-predictor): Premier League ML pipeline and an interactive tactics website.
+- [Resonant](https://github.com/trap-jo7/resonant): Experimental music similarity search using audio embeddings and pgvector.
+- [Cage Atlas](https://github.com/trap-jo7/cage-atlas): Exploratory fighter style comparisons and scouting.
+- [Saturday Gridiron](https://github.com/trap-jo7/saturday-gridiron): Original pixel football game with local career progression.
+- [JMS Photo Gallery](https://github.com/trap-jo7/JMSPhotoGallery): Interactive albums with browser-local photo persistence.
 
-## Getting Started
+The project cards include category filters, repository links, and expandable build notes. Only the photo gallery is labeled as a live website. Project illustrations are conceptual, not product screenshots or live telemetry.
 
-First, run the development server:
+## Development
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
+Use the Node.js version supported by the pinned Next.js release and the package manager declared in `package.json`.
+
+```sh
+pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```sh
+pnpm exec tsc --noEmit
+pnpm build
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The existing Vercel integration deploys updates to `main`.
 
-## Learn More
+## Updating content
 
-To learn more, take a look at the following resources:
+- `components/portfolio.tsx`: profile links, six projects, categories, background, and experience.
+- `app/globals.css`: responsive layouts, colors, typography, and conceptual project illustrations.
+- `app/layout.tsx`: page metadata and social descriptions.
+- `public/john-soliz-resume.pdf`: downloadable resume, refreshed from the November 2026 copy.
+- `public/icon.svg`: portfolio favicon.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [v0 Documentation](https://v0.app/docs) - learn about v0 and how to use it.
+Google Fonts supplies DM Sans and Manrope, with system font fallbacks. The page supports keyboard navigation, reduced motion preferences, a skip link, semantic sections, and a mobile navigation menu.
+
+[LinkedIn](https://www.linkedin.com/in/john-soliz-867421301) · [GitHub](https://github.com/trap-jo7)

@@ -1,487 +1,113 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import {
-  ArrowDownRight,
-  ArrowRight,
-  ArrowUpRight,
-  BriefcaseBusiness,
-  Check,
-  ChevronDown,
-  Cloud,
-  Code2,
-  Database,
-  Download,
-  FileText,
-  GraduationCap,
-  Mail,
-  MapPin,
-  Menu,
-  Network,
-  ShieldCheck,
-  Terminal,
-  X,
-} from "lucide-react"
+import type { ReactNode } from "react"
 
 const profile = {
-  name: "John Soliz",
   email: "johnmsz@outlook.com",
   linkedin: "https://www.linkedin.com/in/john-soliz-867421301",
-  github: "",
+  github: "https://github.com/trap-jo7",
   resume: "/john-soliz-resume.pdf",
-  graduation: "2027",
 }
 
-const navigation = [
-  ["About", "about"],
-  ["Experience", "experience"],
-  ["Skills", "skills"],
-  ["Projects", "projects"],
-  ["Resume", "resume"],
-  ["Contact", "contact"],
-] as const
-
-const skillGroups = [
-  {
-    title: "Cybersecurity",
-    icon: ShieldCheck,
-    description: "Building a strong security foundation.",
-    skills: ["Security fundamentals", "Threat awareness", "Encryption", "Access control", "Security labs"],
-  },
-  {
-    title: "Networking",
-    icon: Network,
-    description: "Understanding how systems connect.",
-    skills: ["TCP/IP", "LAN / WAN", "DNS", "DHCP", "Routing concepts", "Troubleshooting"],
-  },
-  {
-    title: "Systems",
-    icon: Terminal,
-    description: "Practical operating system knowledge.",
-    skills: ["Windows", "Linux fundamentals", "User accounts", "System configuration", "Hardware"],
-  },
-  {
-    title: "Programming & data",
-    icon: Database,
-    description: "Learning by building and organizing.",
-    skills: ["Java", "C++", "SQL", "Relational databases", "Data systems"],
-  },
-  {
-    title: "Tools & infrastructure",
-    icon: Cloud,
-    description: "Curious about the technology underneath.",
-    skills: ["Git", "GitHub", "VS Code", "Microsoft Office", "Virtualization", "Cloud concepts"],
-  },
-]
-
-const projects = [
-  {
-    number: "01",
-    title: "Cybersecurity labs",
-    category: "SECURITY · LEARNING TRACK",
-    icon: ShieldCheck,
-    description:
-      "Hands-on exploration of security fundamentals, encryption, password safety, network security, and threat awareness.",
-    tags: ["Security", "Networking", "Linux"],
-    style: "project-art--security",
-  },
-  {
-    number: "02",
-    title: "Programming practice",
-    category: "SOFTWARE · COURSEWORK",
-    icon: Code2,
-    description:
-      "Java and C++ coursework focused on object-oriented programming, data processing, problem solving, and input validation.",
-    tags: ["Java", "C++", "OOP"],
-    style: "project-art--code",
-  },
-  {
-    number: "03",
-    title: "Networking & systems labs",
-    category: "INFRASTRUCTURE · COURSEWORK",
-    icon: Network,
-    description:
-      "Practical work with networking commands, operating systems, hardware, system administration, and technical troubleshooting.",
-    tags: ["TCP/IP", "Windows", "Systems"],
-    style: "project-art--network",
-  },
-  {
-    number: "04",
-    title: "More in progress",
-    category: "PERSONAL PROJECTS · COMING UP",
-    icon: Database,
-    description:
-      "I’m continuing to build small, practical projects as I explore data systems, cloud technologies, and infrastructure.",
-    tags: ["Data", "Cloud", "Infrastructure"],
-    style: "project-art--data",
-  },
-]
-
-const experience = [
-  {
-    role: "Porter & Ambassador",
-    company: "Smarte Carte",
-    date: "Dec 2023 — Present",
-    place: "Sterling, VA",
-    description:
-      "Deliver customer support in a high-traffic travel environment. Maintain equipment inventory, report discrepancies, and keep rental equipment organized and ready during busy periods.",
-    skills: ["Customer service", "Inventory accuracy", "Operations"],
-    current: true,
-  },
-  {
-    role: "Cart Attendant",
-    company: "Sam’s Club",
-    date: "Dec 2022 — Jan 2023",
-    place: "Sterling, VA",
-    description:
-      "Supported customers with purchases, retrieved and organized carts, stocked displays, and helped maintain clean, efficient warehouse areas.",
-    skills: ["Customer support", "Organization", "Teamwork"],
-  },
-  {
-    role: "Online Order Associate & Stocker",
-    company: "Harris Teeter",
-    date: "Jan 2022",
-    place: "Sterling, VA",
-    description:
-      "Selected, organized, and packaged online orders for pickup while assisting with stocking and inventory organization.",
-    skills: ["Order fulfillment", "Accuracy", "Inventory"],
-  },
-]
-
-function ScrollProgress() {
-  const [progress, setProgress] = useState(0)
-
-  useEffect(() => {
-    let frame = 0
-    const updateProgress = () => {
-      cancelAnimationFrame(frame)
-      frame = requestAnimationFrame(() => {
-        const scrollable = document.documentElement.scrollHeight - window.innerHeight
-        setProgress(scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0)
-      })
-    }
-    updateProgress()
-    window.addEventListener("scroll", updateProgress, { passive: true })
-    window.addEventListener("resize", updateProgress)
-    return () => {
-      cancelAnimationFrame(frame)
-      window.removeEventListener("scroll", updateProgress)
-      window.removeEventListener("resize", updateProgress)
-    }
-  }, [])
-
-  return <div className="scroll-progress" style={{ width: `${progress}%` }} aria-hidden="true" />
+function Arrow({ down = false }: { down?: boolean }) {
+  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true" style={down ? { transform: "rotate(135deg)" } : undefined}><path d="M5 19 19 5M5 5h14v14" /></svg>
+}
+function Icon({ type }: { type: "github" | "linkedin" | "mail" | "download" }) {
+  const paths = {
+    github: <><path d="M9 19c-4 1-4-2-6-2m12 5v-4a3.5 3.5 0 0 0-1-2.7c3.3-.4 6.7-1.6 6.7-7.3a5.7 5.7 0 0 0-1.5-4 5.3 5.3 0 0 0-.1-4s-1.3-.4-4.1 1.5a14 14 0 0 0-7.5 0C4.7-.4 3.4 0 3.4 0a5.3 5.3 0 0 0-.1 4A5.7 5.7 0 0 0 1.8 8c0 5.7 3.4 6.9 6.7 7.3A3.5 3.5 0 0 0 7.5 18v4" transform="translate(1 1) scale(.91)" /></>,
+    linkedin: <><rect x="3" y="3" width="18" height="18" rx="3" /><path d="M7 10v7m0-10v.2M11 17v-7m0 3a3 3 0 0 1 6 0v4" /></>,
+    mail: <><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 6 9 7 9-7" /></>,
+    download: <><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5" /></>,
+  }
+  return <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[type]}</svg>
+}
+function External({ href, children, className = "" }: { href: string; children: ReactNode; className?: string }) {
+  return <a href={href} target="_blank" rel="noopener noreferrer" className={className}>{children}</a>
 }
 
-function SiteNav() {
-  const [open, setOpen] = useState(false)
-  return (
-    <header className="site-header">
-      <nav className="nav-shell" aria-label="Main navigation">
-        <a className="brand-mark" href="#home" aria-label="John Soliz, home">
-          <span>JS</span>
-          <span className="brand-name">John Soliz</span>
-        </a>
-        <div className={`nav-links${open ? " nav-links--open" : ""}`}>
-          {navigation.map(([label, id]) => (
-            <a key={id} href={`#${id}`} onClick={() => setOpen(false)}>
-              {label}
-            </a>
-          ))}
-          <a className="nav-availability" href={`mailto:${profile.email}`} onClick={() => setOpen(false)}>
-            <span className="availability-dot" /> Available
-          </a>
-        </div>
-        <button
-          className="menu-toggle"
-          type="button"
-          aria-label={open ? "Close navigation menu" : "Open navigation menu"}
-          aria-expanded={open}
-          onClick={() => setOpen(!open)}
-        >
-          {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
-        </button>
-      </nav>
-    </header>
-  )
+type Category = "All work" | "Infrastructure" | "Data & ML" | "Interactive"
+type Project = { id: string; title: string; subtitle: string; category: Category; description: string; tags: string[]; repo: string; demo?: string; notes: string; status: string }
+const projects: Project[] = [
+  { id: "netscope", title: "NetScope", subtitle: "FIND THE FAILURE. FOLLOW THE EVIDENCE.", category: "Infrastructure", description: "A Go diagnostic CLI and isolated network lab that trace application failures through DNS, TCP, and HTTP—one layer at a time.", tags: ["Go", "Docker Compose", "CoreDNS"], repo: "netscope", notes: "Reproduced incorrect DNS, stopped applications, disconnected networks, and HTTP 503 failures. Across 15 controlled lab trials, the CLI matched expected symptoms and verified recovery in every trial. These are lab results, not production resolution metrics.", status: "Verified lab" },
+  { id: "pitchside", title: "Pitchside / EPL Predictor", subtitle: "FOOTBALL, THROUGH A DIFFERENT LENS.", category: "Data & ML", description: "Premier League outcome probabilities with a Python ML pipeline, plus an interactive space for exploring formations, tactics, and squads.", tags: ["Python", "XGBoost", "Random Forest"], repo: "epl-predictor", notes: "Uses Elo and rolling-form features, chronological holdouts, and time-series validation to reduce data leakage. The tactics website is separate from the trained model and includes illustrative sample data; no benchmark accuracy is claimed.", status: "ML + tactics" },
+  { id: "resonant", title: "Resonant", subtitle: "FIND MORE MUSIC LIKE THIS MOMENT.", category: "Data & ML", description: "Music discovery by sound. Select a passage and retrieve similar sections using audio embeddings, vector search, and musical feature reranking.", tags: ["Next.js", "FastAPI", "pgvector", "CLAP"], repo: "resonant", notes: "An experimental full-stack prototype: FFmpeg and librosa processing, CLAP embeddings, Celery background jobs, and Postgres vector retrieval. Analysis uses permission-cleared audio. Similarity scores are experimental and have not been benchmarked.", status: "Experimental" },
+  { id: "cage", title: "Cage Atlas", subtitle: "SCOUT THE STYLE BEHIND THE STATS.", category: "Data & ML", description: "An exploratory fighter scouting tool that groups fighting styles, finds statistical similarities, and compares historical UFC performance.", tags: ["Python", "FastAPI", "Clustering"], repo: "cage-atlas", notes: "Builds fighter profiles from strike volume, accuracy, defense, takedowns, and control time. Uses a historical UFCStats dataset snapshot. Style groups are exploratory; statistical resemblance is not a fight prediction.", status: "Exploratory tool" },
+  { id: "gridiron", title: "Saturday Gridiron", subtitle: "A SMALL WORLD. A FULL FOOTBALL GAME.", category: "Interactive", description: "An original pixel football game with 11-on-11 play, offensive and defensive controls, and a local head-coach career with recruiting and progression.", tags: ["TypeScript", "Canvas", "Game systems"], repo: "saturday-gridiron", notes: "Combines a football simulation, original pixel art, play selection, team management, and browser-local career saves. Touch controls are implemented; physical iPhone acceptance and performance verification remain pending. Available as source for local play.", status: "In development" },
+  { id: "gallery", title: "JMS Photo Gallery", subtitle: "A LITTLE MORE ROOM FOR THE VISUAL.", category: "Interactive", description: "A tactile, swipeable photo deck with albums, fullscreen viewing, captions, and drag-and-drop uploads that stay saved in your browser.", tags: ["React", "TypeScript", "IndexedDB"], repo: "JMSPhotoGallery", demo: "https://trap-jo7.github.io/JMSPhotoGallery/", notes: "Keyboard navigation, image-driven background colors, and system light/dark modes complement the card deck. Uploaded photos persist in IndexedDB on the visitor’s own device; they are not shared with other visitors.", status: "Live website" },
+]
+const categories: Category[] = ["All work", "Infrastructure", "Data & ML", "Interactive"]
+
+function NetworkArt({ hero = false }: { hero?: boolean }) {
+  return <div className={`network-art${hero ? " network-art--hero" : ""}`}>
+    <div className="terminal-top"><span><i /><i /><i /></span><span>netscope / diagnostic trace</span><span>GO</span></div>
+    <div className="trace-command"><span>❯</span> netscope -hostname app.lab.test</div>
+    <div className="trace-flow"><div><span className="trace-node">01</span><strong>DNS</strong><small>Resolve</small></div><span className="trace-connector" /><div><span className="trace-node">02</span><strong>TCP</strong><small>Connect</small></div><span className="trace-connector" /><div><span className="trace-node">03</span><strong>HTTP</strong><small>Verify</small></div></div>
+    <div className="trace-result"><span className="dot" /><span>Evidence first. Diagnosis next.</span><span>200 OK</span></div>
+    {hero && <div className="terminal-footer"><span>ISOLATED DOCKER LAB</span><span>ILLUSTRATIVE HEALTHY TRACE</span></div>}
+  </div>
+}
+function ProjectArt({ id }: { id: string }) {
+  if (id === "netscope") return <NetworkArt />
+  if (id === "pitchside") return <div className="pitch-art" aria-hidden="true"><div className="pitch-lines"><div className="pitch-circle" />{[[18,50],[35,22],[35,78],[54,36],[54,64],[77,50]].map(([x,y],i)=><span className="pitch-player" key={i} style={{left:`${x}%`,top:`${y}%`}} />)}</div><div className="art-overlay"><span>THE TACTICS LAB</span><strong>Read the game.</strong><small>Formations · Features · Probabilities</small></div><span className="art-corner">4—3—3</span></div>
+  if (id === "resonant") return <div className="sound-art" aria-hidden="true"><div className="wave-bars">{Array.from({ length: 64 }, (_,i)=><i key={i} style={{height:`${18+Math.abs(Math.sin(i*.51)*Math.cos(i*.17))*105}px`}} />)}</div><div className="audio-region"><span>SELECT A MOMENT</span></div><div className="sound-caption"><span>resonant</span><span>sound → similarity</span></div></div>
+  if (id === "cage") return <div className="cage-art" aria-hidden="true"><svg viewBox="0 0 400 240"><g transform="translate(200 115)" fill="none" stroke="currentColor">{[85,60,35].map(r=><polygon key={r} points={Array.from({length:6},(_,i)=>`${Math.sin(i*Math.PI/3)*r},${Math.cos(i*Math.PI/3)*r}`).join(" ")} opacity=".2"/>)}<polygon points="0,76 65,38 47,-27 0,-79 -62,-36 -36,21" fill="currentColor" fillOpacity=".12" strokeWidth="2"/><polygon points="0,48 39,23 69,-40 0,-59 -40,-23 -62,36" stroke="#e9e6de" opacity=".65" strokeDasharray="4 4"/></g></svg><span className="radar-label radar-label--a">STRIKING</span><span className="radar-label radar-label--b">CONTROL</span><span className="radar-label radar-label--c">DEFENSE</span><div className="cage-caption">STYLE IS A SIGNATURE.</div></div>
+  if (id === "gridiron") return <div className="game-art" aria-hidden="true"><div className="game-score">SATURDAY <span>07 : 14</span> GRIDIRON</div><div className="game-field">{[10,30,50,70,90].map(x=><span className="yard-line" key={x} style={{left:`${x}%`}}><i>{x===50?50: x>50?100-x:x}</i></span>)}{Array.from({length:12},(_,i)=><span className={`pixel-player ${i>5?"pixel-player--away":""}`} key={i} style={{left:`${25+(i%6)*9}%`,top:`${i>5?55+(i%3)*8:22+(i%3)*8}%`}} />)}<span className="ball-route" /></div><div className="game-bottom">11 ON 11 <span>BUILD YOUR DYNASTY</span></div></div>
+  return <div className="gallery-art" aria-hidden="true"><div className="photo-card photo-card--one"><div className="photo-landscape landscape-one" /></div><div className="photo-card photo-card--two"><div className="photo-landscape landscape-two" /></div><div className="photo-card photo-card--three"><div className="photo-landscape landscape-three" /><span>A different perspective.</span></div><span className="gallery-caption">COLLECT THE MOMENTS.</span></div>
 }
 
-function SectionHeading({
-  eyebrow,
-  title,
-  description,
-}: {
-  eyebrow: string
-  title: string
-  description?: string
-}) {
-  return (
-    <div className="section-heading reveal">
-      <span className="eyebrow"><span className="eyebrow-line" />{eyebrow}</span>
-      <h2>{title}</h2>
-      {description && <p>{description}</p>}
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  return <article className={`project-card project-card--${project.id}`}>
+    <div className="project-art" role="img" aria-label={`${project.title} conceptual illustration`}><ProjectArt id={project.id} /><span className="project-index">0{index+1}</span></div>
+    <div className="project-body"><div className="project-meta"><span>{project.category}</span><span className="project-status"><i />{project.status}</span></div>
+      <h3><External href={`${profile.github}/${project.repo}`}>{project.title}<Arrow /></External></h3><p>{project.description}</p>
+      <div className="project-tags">{project.tags.map(t=><span key={t}>{t}</span>)}</div>
+      <div className="project-links"><External href={`${profile.github}/${project.repo}`}><Icon type="github" /> View source <Arrow /></External>{project.demo && <External href={project.demo}>Visit live site <Arrow /></External>}</div>
+      <details><summary>Behind the build <span>+</span></summary><p>{project.notes}</p></details>
     </div>
-  )
-}
-
-function ActionLink({
-  href,
-  children,
-  secondary = false,
-  download = false,
-  external = false,
-}: {
-  href: string
-  children: React.ReactNode
-  secondary?: boolean
-  download?: boolean
-  external?: boolean
-}) {
-  return (
-    <a
-      className={`action-link${secondary ? " action-link--secondary" : ""}`}
-      href={href}
-      {...(download ? { download: "John-Soliz-Resume.pdf" } : {})}
-      {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
-    >
-      {children}
-    </a>
-  )
+  </article>
 }
 
 export function Portfolio() {
-  useEffect(() => {
-    const nodes = document.querySelectorAll<HTMLElement>(".reveal")
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      nodes.forEach((node) => node.classList.add("is-visible"))
-      return
-    }
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible")
-            observer.unobserve(entry.target)
-          }
-        })
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -36px 0px" },
-    )
-    nodes.forEach((node) => observer.observe(node))
-    return () => observer.disconnect()
-  }, [])
+  const [filter,setFilter] = useState<Category>("All work")
+  const [menuOpen,setMenuOpen] = useState(false)
+  useEffect(()=>{
+    if(!menuOpen) return
+    const close=(e:KeyboardEvent)=>{if(e.key==="Escape")setMenuOpen(false)}
+    window.addEventListener("keydown",close)
+    return ()=>window.removeEventListener("keydown",close)
+  },[menuOpen])
+  const visible = projects.filter(p=>filter==="All work" || p.category===filter)
+  return <>
+    <a className="skip-link" href="#main">Skip to content</a>
+    <header className="site-header"><nav className="wrap nav" aria-label="Main navigation"><a className="wordmark" href="#home" aria-label="John Soliz home">js<span>.</span></a><div className={`nav-links ${menuOpen?"is-open":""}`} id="navigation">{[["Work","work"],["About","about"],["Experience","experience"]].map(([label,id])=><a key={id} href={`#${id}`} onClick={()=>setMenuOpen(false)}>{label}</a>)}<External href={profile.linkedin}>LinkedIn <Arrow /></External><a href="#resume" className="nav-resume" onClick={()=>setMenuOpen(false)}>Resume <Arrow /></a></div><button className="menu-toggle" type="button" aria-label={menuOpen?"Close navigation":"Open navigation"} aria-controls="navigation" aria-expanded={menuOpen} onClick={()=>setMenuOpen(!menuOpen)}>{menuOpen?"Close −":"Menu +"}</button></nav></header>
+    <main id="main"><section id="home" className="wrap hero" aria-labelledby="hero-title"><div className="hero-intro"><span className="eyebrow"><span className="dot" /> JOHN SOLIZ / IT STUDENT & BUILDER</span><span className="hero-location">BASED IN VIRGINIA ↗</span></div>
+      <div className="hero-grid"><div className="hero-copy"><h1 id="hero-title">Curiosity.<br />Built into<br /><span>something real.</span></h1><p>I’m John, an IT student turning questions into working systems—from network diagnostics to machine learning and interactive experiences.</p><div className="hero-actions"><a href="#work" className="button button-primary">Explore my work <Arrow down /></a><a href={profile.resume} className="button button-text" target="_blank" rel="noopener noreferrer">View resume <Arrow /></a></div></div>
+      <div className="hero-feature"><div className="feature-label"><span>IN FOCUS / 01</span><span>INFRASTRUCTURE</span></div><NetworkArt hero /><div className="hero-feature-bottom"><div><span>A RECENT BUILD</span><strong>Making the invisible diagnosable.</strong></div><a href="#project-netscope" aria-label="Explore NetScope"><Arrow /></a></div></div></div>
+      <div className="hero-footer"><span>DATA. NETWORKS. CODE. A LITTLE CREATIVITY.</span><div><External href={profile.github}><Icon type="github" /> GitHub</External><External href={profile.linkedin}><Icon type="linkedin" /> LinkedIn</External><a href={`mailto:${profile.email}`}><Icon type="mail" /> Email</a></div></div>
+    </section>
 
-  return (
-    <main id="home" className="portfolio-shell">
-      <ScrollProgress />
-      <div className="ambient ambient--hero" aria-hidden="true" />
-      <div className="ambient ambient--lower" aria-hidden="true" />
-      <SiteNav />
+    <section id="work" className="wrap work-section" aria-labelledby="work-title"><div className="section-head"><div><span className="eyebrow">01 / SELECTED WORK</span><h2 id="work-title">Ideas, made tangible<span>.</span></h2></div><p>Six builds. Different disciplines.<br />The same drive to figure things out.</p></div><div className="filter-row"><div className="filters" role="group" aria-label="Filter projects by category">{categories.map(c=><button key={c} type="button" aria-pressed={filter===c} onClick={()=>setFilter(c)}>{c}{c==="All work" && <span>06</span>}</button>)}</div><span className="filter-count" aria-live="polite">{String(visible.length).padStart(2,"0")} PROJECTS</span></div><div className="project-grid">{visible.map(p=><div key={p.id} id={`project-${p.id}`}><ProjectCard project={p} index={projects.indexOf(p)} /></div>)}</div><div className="work-footer"><p>Each project has a story. The code has the details.</p><External href={profile.github} className="text-link">More on GitHub <Arrow /></External></div></section>
 
-      <section className="hero section-wrap" aria-labelledby="hero-title">
-        <div className="hero-copy">
-          <div className="status-pill reveal">
-            <span className="availability-dot" /> Open to internship & technology opportunities
-          </div>
-          <p className="hero-pretitle reveal">INFORMATION TECHNOLOGY · LYNCHBURG, VA</p>
-          <h1 id="hero-title" className="reveal">
-            John <span>Soliz.</span>
-          </h1>
-          <p className="hero-specialty reveal">Data systems <span>·</span> Security <span>·</span> Infrastructure</p>
-          <p className="hero-description reveal">
-            Senior IT student graduating in 2027, building experience across cybersecurity, data systems,
-            networking, software, and modern IT infrastructure.
-          </p>
-          <div className="hero-actions reveal">
-            <ActionLink href="#projects">Explore my work <ArrowDownRight aria-hidden="true" /></ActionLink>
-            <ActionLink href={profile.resume} secondary external>View resume <ArrowUpRight aria-hidden="true" /></ActionLink>
-          </div>
-          <div className="hero-socials reveal" aria-label="Social links">
-            <a href={profile.linkedin} target="_blank" rel="noreferrer" aria-label="John Soliz on LinkedIn">
-              <span className="social-icon-text">in</span><span>LinkedIn</span><ArrowUpRight aria-hidden="true" />
-            </a>
-            {profile.github ? (
-              <a href={profile.github} target="_blank" rel="noreferrer" aria-label="John Soliz on GitHub">
-                <span className="github-glyph" aria-hidden="true">gh</span><span>GitHub</span><ArrowUpRight aria-hidden="true" />
-              </a>
-            ) : (
-              <span className="social-pending"><span className="github-glyph" aria-hidden="true">gh</span><span>GitHub <small>link soon</small></span></span>
-            )}
-            <a href={`mailto:${profile.email}`} aria-label={`Email John Soliz at ${profile.email}`}>
-              <Mail aria-hidden="true" /><span>Email</span><ArrowUpRight aria-hidden="true" />
-            </a>
-          </div>
-        </div>
+    <section id="about" className="about-section" aria-labelledby="about-title"><div className="wrap about-grid"><div><span className="eyebrow">02 / THE PERSON BEHIND THE PROJECTS</span><h2 id="about-title">I like to know<br />how things<br /><em>actually work.</em></h2><div className="about-coordinate"><span className="crosshair">⌖</span><span>VIRGINIA, USA<br /><small>ALWAYS EXPLORING</small></span></div></div><div className="about-copy"><p className="about-lead">The best way I know to understand a system is to build something with it.</p><p>I’m studying Information Technology at Liberty University, focused on Data Networking & Security, with graduation expected in 2027. My projects connect that foundation to the things I’m curious about: infrastructure, sports, music, and visual experiences.</p><p>I’m building practical experience in troubleshooting, data pipelines, and web development. I enjoy following the evidence, understanding the tradeoffs, and making complicated ideas easier to explore.</p><div className="education-note"><span>LIBERTY UNIVERSITY</span><strong>B.S. Information Technology</strong><p>Data Networking & Security <span>·</span> Expected 2027</p></div><a href={`mailto:${profile.email}`} className="text-link">Let’s talk about what’s next <Arrow /></a></div></div>
+      <div className="wrap toolkit"><span className="eyebrow">MY WORKING TOOLKIT</span><div className="toolkit-grid">{[
+        ["01","Networks & infrastructure","TCP/IP · DNS · Docker Compose · CoreDNS · Wireshark · Cisco Packet Tracer"],
+        ["02","Programming & data","Go · Python · Java · TypeScript · SQL · PostgreSQL · Machine learning"],
+        ["03","Web & systems","React · Next.js · FastAPI · Git · Windows · System configuration"],
+      ].map(([n,t,s])=><div key={n}><span>{n}</span><h3>{t}</h3><p>{s}</p></div>)}</div></div>
+    </section>
 
-        <div className="hero-visual reveal" aria-label="A visual overview of John’s technology interests">
-          <div className="visual-orbit visual-orbit--outer" />
-          <div className="visual-orbit visual-orbit--inner" />
-          <div className="visual-cross visual-cross--one" />
-          <div className="visual-cross visual-cross--two" />
-          <div className="visual-card">
-            <div className="visual-card-top">
-              <span className="window-dots"><i /><i /><i /></span>
-              <span className="visual-label">SYSTEMS OVERVIEW</span>
-              <span className="visual-live"><span className="availability-dot" /> ONLINE</span>
-            </div>
-            <div className="visual-center">
-              <div className="core-ring"><div className="core-inner"><span>JS</span></div></div>
-              <div className="orbit-node node-security"><ShieldCheck aria-hidden="true" /></div>
-              <div className="orbit-node node-network"><Network aria-hidden="true" /></div>
-              <div className="orbit-node node-data"><Database aria-hidden="true" /></div>
-              <div className="orbit-node node-cloud"><Cloud aria-hidden="true" /></div>
-            </div>
-            <div className="visual-card-bottom">
-              <div><span className="visual-stat-label">FOCUS AREA</span><strong>Data systems & security</strong></div>
-              <span className="visual-status"><span /> LEARNING IN MOTION</span>
-            </div>
-          </div>
-          <div className="floating-note note-top"><span className="note-icon"><GraduationCap aria-hidden="true" /></span><span><small>ON TRACK</small><strong>Class of ’27</strong></span></div>
-          <div className="floating-note note-bottom"><span className="note-icon note-icon--violet"><Code2 aria-hidden="true" /></span><span><small>CURRENTLY EXPLORING</small><strong>Security + systems</strong></span></div>
-          <span className="hero-visual-caption">CURIOUS BY DESIGN<span> / </span>BUILT TO LEARN</span>
-        </div>
-        <a className="scroll-cue" href="#about"><span className="scroll-cue-line" />Scroll to explore</a>
-      </section>
+    <section id="experience" className="wrap experience-section" aria-labelledby="experience-title"><div className="section-head"><div><span className="eyebrow">03 / EXPERIENCE</span><h2 id="experience-title">A foundation beyond code<span>.</span></h2></div><p>Clear communication. Reliable follow-through.<br />Care for the details.</p></div><div className="experience-list">{[
+      {role:"Senate Secretary",org:"Student Government Association · Liberty University",date:"PRESENT",description:"Maintain official Senate meeting minutes and organize motions, votes, and proceedings into accurate records."},
+      {role:"Porter & Ambassador",org:"Smarte Carte · Sterling, VA",date:"2024 — 2026",description:"Supported travelers in a busy airport, tracked equipment inventory, and reported shortages, damage, and discrepancies."},
+      {role:"Online Order Associate & Stocker",org:"Harris Teeter · Sterling, VA",date:"JAN 2022 — OCT 2023",description:"Picked and packed online orders, prepared pickup receipts, and organized inventory to support timely fulfillment."},
+      {role:"Cart Attendant",org:"Sam’s Club · Sterling, VA",date:"DEC 2022 — JAN 2023",description:"Helped customers load purchases and organized carts and merchandise to support daily store operations."},
+    ].map((e,i)=><article className="experience-row" key={e.org}><span className="experience-number">0{i+1}</span><div><h3>{e.role}</h3><span className="experience-org">{e.org}</span><p>{e.description}</p></div><span className="experience-date">{e.date}</span></article>)}</div></section>
 
-      <section id="about" className="section-wrap section-block about-section" aria-labelledby="about-title">
-        <SectionHeading eyebrow="A LITTLE ABOUT ME" title="Curiosity, meet capability." description="I like knowing what’s happening under the hood—and getting hands-on with the systems that keep things running." />
-        <div className="about-grid">
-          <div className="about-story glass-card reveal">
-            <span className="story-mark" aria-hidden="true">01 / PROFILE</span>
-            <h3>Technology makes more sense when you get your hands on it.</h3>
-            <p>
-              I’m an Information Technology student at Liberty University with a background in IT systems and a growing focus on data networking and security. I enjoy breaking down how systems work, troubleshooting real-world problems, and building confidence through practical projects, labs, and coursework.
-            </p>
-            <p>
-              I’m preparing for a career in technology and especially interested in cybersecurity, networking, cloud technologies, software development, and IT infrastructure.
-            </p>
-            <a className="text-link" href="#experience">Get to know my background <ArrowRight aria-hidden="true" /></a>
-          </div>
-          <div className="about-facts">
-            {[
-              ["EDUCATION", "B.S. Information Technology", "Liberty University"],
-              ["FOCUS", "Data Networking & Security", "Systems · Security · Networks"],
-              ["GRADUATION", "Expected 2027", "Currently completing my degree"],
-              ["LOCATION", "Virginia", "Open to internship opportunities"],
-            ].map(([label, value, sub], index) => (
-              <div className="fact-card glass-card reveal" key={label} style={{ "--reveal-index": index } as React.CSSProperties}>
-                <span className="fact-index">0{index + 1}</span>
-                <div><span className="fact-label">{label}</span><strong>{value}</strong><small>{sub}</small></div>
-                {index === 0 ? <GraduationCap aria-hidden="true" /> : index === 1 ? <ShieldCheck aria-hidden="true" /> : index === 2 ? <Check aria-hidden="true" /> : <MapPin aria-hidden="true" />}
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="education-strip glass-card reveal">
-          <div className="education-icon"><GraduationCap aria-hidden="true" /></div>
-          <div className="education-main"><span className="fact-label">EDUCATION SNAPSHOT</span><strong>Information Technology</strong><span>Liberty University · Data Networking & Security</span></div>
-          <div className="education-secondary"><strong>2026 — 2027</strong><span>Expected graduation</span></div>
-          <a href={profile.resume} className="education-link" target="_blank" rel="noreferrer" aria-label="View education details in resume"><ArrowUpRight aria-hidden="true" /></a>
-        </div>
-      </section>
+    <section id="resume" className="wrap resume-section" aria-labelledby="resume-title"><div className="resume-panel"><div className="resume-copy"><span className="eyebrow">04 / THE FULL PICTURE</span><h2 id="resume-title">The person.<br />The projects.<br /><span>The one-pager.</span></h2><p>My education, experience, technical skills, and selected projects—all in one place.</p><div className="hero-actions"><External href={profile.resume} className="button button-primary">Open resume <Arrow /></External><a href={profile.resume} download="John-Soliz-Resume.pdf" className="button button-outline"><Icon type="download" /> Download PDF</a></div><span className="resume-format">PDF DOCUMENT / UPDATED NOVEMBER 2026</span></div><External href={profile.resume} className="resume-preview"><span className="paper-top">JOHN SOLIZ<span>RESUME / 2026</span></span><span className="paper-contact">johnmsz@outlook.com · github.com/trap-jo7</span><span className="paper-label">EDUCATION</span><strong>Liberty University</strong><p>B.S. Information Technology<br />Data Networking & Security · 2027</p><span className="paper-label">SELECTED PROJECTS</span><strong>NetScope</strong><p>Go diagnostics · DNS / TCP / HTTP</p><strong>EPL Predictor</strong><p>Python · Machine learning · Match probabilities</p><strong>JMS Photo Gallery</strong><p>TypeScript · Interactive experiences</p><span className="paper-label">EXPERIENCE</span><strong>Senate Secretary</strong><p>Student Government Association</p><span className="paper-bottom">VIEW FULL RESUME <Arrow /></span></External></div></section>
 
-      <section id="experience" className="section-wrap section-block experience-section" aria-labelledby="experience-title">
-        <SectionHeading eyebrow="THE PATH SO FAR" title="Experience that travels." description="Customer-facing roles taught me to stay dependable, communicate clearly, and keep details in order—even when it gets busy." />
-        <div className="experience-layout">
-          <aside className="experience-aside reveal">
-            <div className="aside-symbol"><BriefcaseBusiness aria-hidden="true" /></div>
-            <span className="fact-label">WORK EXPERIENCE</span>
-            <p>Every role has sharpened skills I’ll bring to a technology team: service, reliability, attention to detail, and a willingness to learn.</p>
-            <div className="aside-note"><span className="availability-dot" /> CURRENTLY WORKING</div>
-          </aside>
-          <div className="timeline">
-            {experience.map((item, index) => (
-              <article className="timeline-item reveal" key={item.company} style={{ "--reveal-index": index } as React.CSSProperties}>
-                <div className="timeline-marker"><span /></div>
-                <div className="timeline-card glass-card">
-                  <div className="timeline-top"><span className="timeline-date">{item.date}</span>{item.current && <span className="current-badge"><span className="availability-dot" /> CURRENT</span>}</div>
-                  <h3>{item.role}</h3>
-                  <div className="timeline-company">{item.company}<span>·</span><span className="timeline-location">{item.place}</span></div>
-                  <p>{item.description}</p>
-                  <div className="tag-row">{item.skills.map((skill) => <span className="skill-tag" key={skill}>{skill}</span>)}</div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-        <div className="education-history reveal">
-          <span className="fact-label">EDUCATION</span>
-          <div className="education-history-row"><span className="education-history-dot" /><div><strong>Liberty University</strong><p>B.S. Information Technology · Data Networking & Security</p></div><span className="education-history-date">2026 — Present</span></div>
-          <div className="education-history-row"><span className="education-history-dot" /><div><strong>Northern Virginia Community College</strong><p>A.S. Information Technology Systems</p></div><span className="education-history-date">2023 — 2025</span></div>
-          <div className="education-history-row"><span className="education-history-dot" /><div><strong>Dominion High School</strong><p>High School Diploma · Sterling, VA</p></div><span className="education-history-date">2023</span></div>
-        </div>
-      </section>
-
-      <section id="skills" className="section-wrap section-block skills-section" aria-labelledby="skills-title">
-        <SectionHeading eyebrow="TOOLS OF THE TRADE" title="A foundation to build on." description="A growing toolkit shaped by coursework, labs, and real-world problem solving. Always learning, always adding." />
-        <div className="skills-grid">
-          {skillGroups.map(({ title, icon: Icon, description, skills }, index) => (
-            <article className={`skill-card glass-card reveal${index === 0 ? " skill-card--featured" : ""}`} key={title} style={{ "--reveal-index": index } as React.CSSProperties}>
-              <div className="skill-card-head"><span className="skill-icon"><Icon aria-hidden="true" /></span><span className="skill-card-index">0{index + 1}</span></div>
-              <h3>{title}</h3><p>{description}</p>
-              <div className="tag-row">{skills.map((skill) => <span className="skill-tag" key={skill}>{skill}</span>)}</div>
-            </article>
-          ))}
-          <div className="skill-note reveal"><span className="note-line" /><p>Focused on learning the fundamentals deeply, then applying them to practical problems.</p></div>
-        </div>
-      </section>
-
-      <section id="projects" className="section-wrap section-block projects-section" aria-labelledby="projects-title">
-        <div className="projects-heading-row">
-          <SectionHeading eyebrow="WORK IN PROGRESS" title="Featured projects." description="Hands-on learning across security, programming, and systems. These highlight the areas I’m actively building experience in." />
-          <a className="text-link projects-link" href={`mailto:${profile.email}?subject=John%20Soliz%20projects`}>Ask me about my work <ArrowUpRight aria-hidden="true" /></a>
-        </div>
-        <div className="projects-grid">
-          {projects.map(({ number, title, category, icon: Icon, description, tags, style }, index) => (
-            <article className="project-card glass-card reveal" key={title} style={{ "--reveal-index": index } as React.CSSProperties}>
-              <div className={`project-art ${style}`} aria-hidden="true">
-                <div className="art-grid" /><div className="art-orb" /><div className="art-lines"><i /><i /><i /><i /></div>
-                <div className="project-art-icon"><Icon aria-hidden="true" /></div>
-                <span className="project-art-index">{number}<span> / 04</span></span>
-                <span className="art-caption">{title.toUpperCase()}</span>
-              </div>
-              <div className="project-content"><span className="project-category">{category}</span><h3>{title}</h3><p>{description}</p><div className="tag-row">{tags.map((tag) => <span className="skill-tag" key={tag}>{tag}</span>)}</div><a className="project-contact-link" href={`mailto:${profile.email}?subject=${encodeURIComponent(`Ask John about ${title}`)}`}>Ask me about this work <ArrowUpRight aria-hidden="true" /></a></div>
-            </article>
-          ))}
-        </div>
-        <p className="projects-footnote"><span /> Project descriptions reflect coursework and learning areas; published repository links will be added as projects are ready to share.</p>
-      </section>
-
-      <section id="resume" className="section-wrap section-block resume-section" aria-labelledby="resume-title">
-        <div className="resume-panel glass-card reveal">
-          <div className="resume-glow" aria-hidden="true" />
-          <div className="resume-copy"><span className="eyebrow"><span className="eyebrow-line" /> THE FULL PICTURE</span><h2 id="resume-title">Want the <span>full picture?</span></h2><p>Explore my education, technical foundation, experience, and the skills I’m bringing to my next opportunity.</p><div className="hero-actions"><ActionLink href={profile.resume} external>View my resume <ArrowUpRight aria-hidden="true" /></ActionLink><ActionLink href={profile.resume} secondary download>Download PDF <Download aria-hidden="true" /></ActionLink></div></div>
-          <div className="resume-document" aria-hidden="true"><div className="document-sheet"><div className="document-mark"><FileText /></div><span className="document-name">JOHN SOLIZ</span><span className="document-role">INFORMATION TECHNOLOGY</span><div className="document-rule" /><span className="document-line document-line--long" /><span className="document-line" /><span className="document-line document-line--mid" /><span className="document-section-label">EDUCATION</span><span className="document-line document-line--long" /><span className="document-line document-line--mid" /><span className="document-section-label">SKILLS & EXPERIENCE</span><span className="document-line document-line--long" /><span className="document-line" /><span className="document-line document-line--mid" /><div className="document-seal"><Check /></div></div><span className="document-caption">RESUME · 2026</span></div>
-        </div>
-      </section>
-
-      <section className="section-wrap section-block connect-section" aria-labelledby="connect-title">
-        <SectionHeading eyebrow="ELSEWHERE ON THE WEB" title="Let’s connect." description="The best opportunities start with a conversation. Find me on LinkedIn or reach out directly." />
-        <div className="connect-grid">
-          <a className="connect-card glass-card reveal" href={profile.linkedin} target="_blank" rel="noreferrer"><span className="connect-icon connect-icon--linkedin"><span className="social-icon-text">in</span></span><span className="connect-text"><strong>LinkedIn</strong><small>Connect with me professionally.</small></span><ArrowUpRight className="connect-arrow" aria-hidden="true" /></a>
-          <a className="connect-card glass-card reveal" href={`mailto:${profile.email}`}><span className="connect-icon"><Mail aria-hidden="true" /></span><span className="connect-text"><strong>Email</strong><small>Internships, projects, or opportunities.</small></span><ArrowUpRight className="connect-arrow" aria-hidden="true" /></a>
-          <a className="connect-card glass-card reveal" href={profile.resume} target="_blank" rel="noreferrer"><span className="connect-icon"><FileText aria-hidden="true" /></span><span className="connect-text"><strong>Resume</strong><small>Education, experience, and skills.</small></span><ArrowUpRight className="connect-arrow" aria-hidden="true" /></a>
-          {profile.github ? <a className="connect-card glass-card reveal" href={profile.github} target="_blank" rel="noreferrer"><span className="connect-icon"><span className="github-glyph" aria-hidden="true">gh</span></span><span className="connect-text"><strong>GitHub</strong><small>Code, labs, and technical projects.</small></span><ArrowUpRight className="connect-arrow" aria-hidden="true" /></a> : <div className="connect-card connect-card--pending glass-card reveal"><span className="connect-icon"><span className="github-glyph" aria-hidden="true">gh</span></span><span className="connect-text"><strong>GitHub</strong><small>Profile link to be added.</small></span><span className="connect-pending">COMING SOON</span></div>}
-        </div>
-      </section>
-
-      <section id="contact" className="section-wrap section-block contact-section" aria-labelledby="contact-title">
-        <div className="contact-panel glass-card reveal">
-          <div className="contact-orb contact-orb--one" aria-hidden="true" /><div className="contact-orb contact-orb--two" aria-hidden="true" />
-          <span className="eyebrow"><span className="eyebrow-line" /> OPEN TO WHAT’S NEXT</span>
-          <h2 id="contact-title">Let’s build <span>something.</span></h2>
-          <p>I’m open to internships, technology opportunities, collaborative projects, and conversations about IT, cybersecurity, and emerging technology.</p>
-          <div className="contact-actions"><ActionLink href={`mailto:${profile.email}`}>Email me <Mail aria-hidden="true" /></ActionLink><ActionLink href={profile.linkedin} secondary external>Connect on LinkedIn <ArrowUpRight aria-hidden="true" /></ActionLink></div>
-          <span className="contact-signoff">GOOD THINGS START WITH A HELLO.</span>
-        </div>
-      </section>
-
-      <footer className="site-footer section-wrap">
-        <div className="footer-main"><a className="brand-mark" href="#home"><span>JS</span><span className="brand-name">John Soliz</span></a><p>Information Technology <span>·</span> Data Systems & Security</p><span className="footer-note">Built with curiosity and technology.</span></div>
-        <div className="footer-links"><a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn <ArrowUpRight aria-hidden="true" /></a><a href={`mailto:${profile.email}`}>Email <ArrowUpRight aria-hidden="true" /></a><a href={profile.resume} target="_blank" rel="noreferrer">Resume <ArrowUpRight aria-hidden="true" /></a></div>
-        <div className="footer-bottom"><span>© 2026 John Soliz</span><a href="#home">Back to top <ChevronDown aria-hidden="true" /></a><span className="footer-location"><MapPin aria-hidden="true" /> Virginia, USA</span></div>
-      </footer>
+    <section id="contact" className="wrap contact-section" aria-labelledby="contact-title"><span className="eyebrow"><span className="dot" /> LET’S CONNECT</span><div className="contact-heading"><h2 id="contact-title">What’s next?<br /><span>Let’s find out.</span></h2><a href={`mailto:${profile.email}`} className="contact-arrow" aria-label="Email John Soliz"><Arrow /></a></div><div className="contact-bottom"><p>Interested in internships, technology opportunities,<br />and a good conversation about building things.</p><a href={`mailto:${profile.email}`} className="contact-email">{profile.email} <Arrow /></a></div></section>
     </main>
-  )
+    <footer className="wrap footer"><a className="wordmark" href="#home" aria-label="Back to top">js<span>.</span></a><span>© {new Date().getFullYear()} John Soliz</span><div><External href={profile.github}>GitHub <Arrow /></External><External href={profile.linkedin}>LinkedIn <Arrow /></External><a href={profile.resume} target="_blank" rel="noopener noreferrer">Resume <Arrow /></a></div><a href="#home" className="back-top">Back to top ↑</a></footer>
+  </>
 }
-
