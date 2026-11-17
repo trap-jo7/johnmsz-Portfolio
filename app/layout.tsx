@@ -2,25 +2,20 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'John Soliz — IT, Infrastructure & Creative Technology',
-  description: 'John Soliz’s selected work in network diagnostics, machine learning, and interactive experiences. Explore NetScope, EPL Predictor, Resonant, Cage Atlas, Saturday Gridiron, and JMS Photo Gallery.',
+  title: 'John Soliz | Information Technology',
+  description: 'John Soliz, Information Technology student at Liberty University focused on Data Networking & Security. Resume, project repositories, education, and experience.',
   openGraph: {
-    title: 'John Soliz — Curiosity, built into something real.',
-    description: 'IT student at Liberty University. Projects in infrastructure, data, and creative technology. Explore my work, resume, and background.',
+    title: 'John Soliz | Information Technology',
+    description: 'Resume, selected projects, and experience. B.S. Information Technology, Liberty University, expected 2027.',
     type: 'website',
     locale: 'en_US',
   },
-  twitter: {
-    card: 'summary',
-    title: 'John Soliz — IT & Creative Technology',
-    description: 'Network diagnostics, machine learning, and interactive experiences. Selected projects by John Soliz.',
-  },
-  icons: { icon: '/icon.svg', apple: '/apple-icon.png' },
+  icons: { icon: '/icon.svg' },
 }
 
 export const viewport: Viewport = {
-  colorScheme: 'dark',
-  themeColor: '#111311',
+  colorScheme: 'light',
+  themeColor: '#ffffff',
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

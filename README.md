@@ -1,44 +1,43 @@
 # John Soliz — Portfolio
 
-A responsive portfolio for John Soliz, an Information Technology student at Liberty University focused on Data Networking & Security.
+A professional portfolio using documented resume and GitHub content. The primary projects are NetScope, EPL Predictor, and JMS Photo Gallery; additional GitHub repositories appear in a secondary list.
 
-**Website:** https://johnmsz.vercel.app
+## Content
 
-## Selected projects
+- `components/portfolio.tsx`: profile, education, project descriptions, experience, resume skills, and links.
+- `app/globals.css`: approved white, navy, and blue theme; typography, spacing, responsive layouts, focus styles, and reduced motion.
+- `public/john-soliz-resume.pdf`: the actual November 2026 resume.
+- `DESIGN.md`: approved brand, section patterns, motion, and content evidence policy.
+- `docs/`: complete standalone HTML/CSS portfolio with relative asset links, suitable for static hosting or GitHub Pages.
 
-- [NetScope](https://github.com/trap-jo7/netscope): Go network diagnostics and an isolated DNS/TCP/HTTP incident lab.
-- [Pitchside / EPL Predictor](https://github.com/trap-jo7/epl-predictor): Premier League ML pipeline and an interactive tactics website.
-- [Resonant](https://github.com/trap-jo7/resonant): Experimental music similarity search using audio embeddings and pgvector.
-- [Cage Atlas](https://github.com/trap-jo7/cage-atlas): Exploratory fighter style comparisons and scouting.
-- [Saturday Gridiron](https://github.com/trap-jo7/saturday-gridiron): Original pixel football game with local career progression.
-- [JMS Photo Gallery](https://github.com/trap-jo7/JMSPhotoGallery): Interactive albums with browser-local photo persistence.
+NetScope's contribution wording follows its repository authorship notes. The 15-trial result is a local-lab result. EPL Predictor's sample website data is distinguished from its model. No illustrative dashboards, invented statistics, proficiency ratings, or simulated product screenshots are used.
 
-The project cards include category filters, repository links, and expandable build notes. Only the photo gallery is labeled as a live website. Project illustrations are conceptual, not product screenshots or live telemetry.
+## Next.js development
 
-## Development
-
-Use the Node.js version supported by the pinned Next.js release and the package manager declared in `package.json`.
+Use the package manager declared in `package.json` and a Node.js release supported by the pinned Next.js version.
 
 ```sh
 pnpm install --frozen-lockfile
 pnpm dev
-```
-
-```sh
 pnpm exec tsc --noEmit
 pnpm build
 ```
 
-The existing Vercel integration deploys updates to `main`.
+## Static hosting without Vercel
 
-## Updating content
+The committed `docs/` directory is self-contained and needs no JavaScript, framework runtime, or server. Deploy its contents on any static host, or configure GitHub Pages to publish `main` / `docs`.
 
-- `components/portfolio.tsx`: profile links, six projects, categories, background, and experience.
-- `app/globals.css`: responsive layouts, colors, typography, and conceptual project illustrations.
-- `app/layout.tsx`: page metadata and social descriptions.
-- `public/john-soliz-resume.pdf`: downloadable resume, refreshed from the November 2026 copy.
-- `public/icon.svg`: portfolio favicon.
+To regenerate it after source changes:
 
-Google Fonts supplies DM Sans and Manrope, with system font fallbacks. The page supports keyboard navigation, reduced motion preferences, a skip link, semantic sections, and a mobile navigation menu.
+```sh
+pnpm build
+node scripts/export-static.mjs
+```
+
+For the Sites deployment, `.openai/hosting.json` identifies the selected site and `scripts/package-site.mjs` copies `docs/` into `dist/`. The hosting archive contains that exact static document and its assets.
+
+`vercel.json` keeps the existing deployment serving the committed static files, with no install or build step. This configuration is optional; the same `docs/` files work on other hosts.
+
+## Professional profiles
 
 [LinkedIn](https://www.linkedin.com/in/john-soliz-867421301) · [GitHub](https://github.com/trap-jo7)
